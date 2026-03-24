@@ -2597,7 +2597,7 @@ function PageVent() {
         <div style={{ fontSize: 12, color: "#065f46" }}>Calcul selon Eurocode EN 1991-1-4 (France) — Vérification épaisseur selon DTU 39</div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 220px", gap: 24, marginBottom: 24 }}>
         {/* Colonne gauche — Paramètres vent */}
         <div style={{ background: "#f9fafb", borderRadius: 12, padding: "18px 20px", border: "1px solid #e5e7eb" }}>
           <div style={{ fontSize: 12, fontWeight: 700, color: "#374151", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 16 }}>Paramètres vent</div>
@@ -2681,6 +2681,54 @@ function PageVent() {
               {" · "}Rapport L/l : <strong>{(Math.max(+largeur,+hauteurVitrage)/Math.min(+largeur,+hauteurVitrage)).toFixed(2)}</strong>
             </div>
           )}
+        </div>
+
+        {/* Carte zones de vent France */}
+        <div style={{ background: "#f9fafb", borderRadius: 12, padding: "14px", border: "1px solid #e5e7eb" }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: "#374151", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 10, textAlign: "center" }}>
+            Zones de vent — France
+          </div>
+          <svg viewBox="0 0 200 240" style={{ width: "100%", height: "auto" }}>
+            {/* Fond */}
+            <rect x="0" y="0" width="200" height="240" fill="#e0f2fe" rx="8"/>
+            {/* Silhouette France simplifiée */}
+            {/* Zone 1 - Centre/Est (bleu clair) */}
+            <path d="M95,40 L130,35 L155,55 L160,80 L155,110 L145,130 L130,145 L110,150 L95,140 L85,120 L80,95 L85,65 Z" fill="#bfdbfe" stroke="#fff" strokeWidth="1"/>
+            {/* Zone 2 - Majorité territoire (vert) */}
+            <path d="M55,50 L95,40 L85,65 L80,95 L85,120 L95,140 L85,160 L70,170 L50,165 L35,145 L30,115 L35,80 L45,60 Z" fill="#bbf7d0" stroke="#fff" strokeWidth="1"/>
+            {/* Zone 2 suite Nord */}
+            <path d="M95,40 L130,35 L125,20 L105,15 L85,20 L70,30 L55,50 L95,40 Z" fill="#bbf7d0" stroke="#fff" strokeWidth="1"/>
+            {/* Zone 3 - Littoral/Montagne (orange) */}
+            <path d="M30,80 L35,80 L35,115 L30,115 L20,100 L15,80 L20,65 Z" fill="#fed7aa" stroke="#fff" strokeWidth="1"/>
+            <path d="M35,145 L50,165 L45,180 L30,175 L20,160 L25,145 Z" fill="#fed7aa" stroke="#fff" strokeWidth="1"/>
+            <path d="M85,160 L95,140 L110,150 L115,170 L105,185 L90,180 Z" fill="#fed7aa" stroke="#fff" strokeWidth="1"/>
+            {/* Zone 4 - Très exposé (rouge) */}
+            <path d="M15,80 L20,65 L25,55 L20,45 L10,50 L8,70 Z" fill="#fca5a5" stroke="#fff" strokeWidth="1"/>
+            {/* Contour France */}
+            <path d="M85,20 L105,15 L125,20 L130,35 L155,55 L160,80 L155,110 L145,130 L130,145 L115,170 L105,185 L90,180 L85,160 L70,170 L50,165 L45,180 L30,175 L20,160 L25,145 L35,145 L30,115 L15,80 L8,70 L10,50 L20,45 L25,55 L20,65 L20,65 L35,80 L45,60 L55,50 L70,30 L85,20 Z"
+              fill="none" stroke="#64748b" strokeWidth="1.5"/>
+            {/* Labels zones */}
+            <text x="110" y="92" fontSize="9" fontWeight="bold" fill="#1e40af" textAnchor="middle">Z1</text>
+            <text x="65" y="100" fontSize="9" fontWeight="bold" fill="#15803d" textAnchor="middle">Z2</text>
+            <text x="25" y="100" fontSize="8" fontWeight="bold" fill="#c2410c" textAnchor="middle">Z3</text>
+            <text x="12" y="65" fontSize="7" fontWeight="bold" fill="#b91c1c" textAnchor="middle">Z4</text>
+            {/* Légende */}
+            <rect x="10" y="195" width="10" height="8" fill="#fca5a5" rx="1"/>
+            <text x="23" y="202" fontSize="7" fill="#374151">Z4 — 32 m/s</text>
+            <rect x="10" y="207" width="10" height="8" fill="#fed7aa" rx="1"/>
+            <text x="23" y="214" fontSize="7" fill="#374151">Z3 — 28 m/s</text>
+            <rect x="100" y="195" width="10" height="8" fill="#bbf7d0" rx="1"/>
+            <text x="113" y="202" fontSize="7" fill="#374151">Z2 — 24 m/s</text>
+            <rect x="100" y="207" width="10" height="8" fill="#bfdbfe" rx="1"/>
+            <text x="113" y="214" fontSize="7" fill="#374151">Z1 — 22 m/s</text>
+            {/* Zone sélectionnée highlight */}
+            <text x="100" y="232" fontSize="8" fontWeight="bold" fill="#1a1a2e" textAnchor="middle">
+              {zone === "1" ? "▶ Zone 1 sélectionnée" : zone === "2" ? "▶ Zone 2 sélectionnée" : zone === "3" ? "▶ Zone 3 sélectionnée" : "▶ Zone 4 sélectionnée"}
+            </text>
+          </svg>
+          <div style={{ marginTop: 8, fontSize: 10, color: "#9ca3af", textAlign: "center", lineHeight: 1.4 }}>
+            Carte indicative — vérifier<br/>la carte NV65/Eurocode officielle
+          </div>
         </div>
       </div>
 
