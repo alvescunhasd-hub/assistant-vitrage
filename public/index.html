@@ -2732,7 +2732,7 @@ function PageVent() {
 function App() {
   const [db, setDB] = useState(() => getDB());
   const [controles, setControles] = useState(() => getControles());
-  const [page, setPage] = useState("recherche");
+  const [page, setPage] = useState("vent");
 
   const handleUpdate = (newDB) => {
     setDB(newDB);
@@ -2740,8 +2740,8 @@ function App() {
   };
 
   const pages = [
-    { id: "recherche", label: "Recherche vitrage", icon: "🔍" },
     { id: "vent", label: "Calcul vent & DTU 39", icon: "💨" },
+    { id: "recherche", label: "Recherche vitrage", icon: "🔍" },
     { id: "controle", label: "Contrôle solaire", icon: "☀" },
     { id: "base", label: "Ma base", icon: "📚" },
     { id: "ajouter", label: "Ajouter un système", icon: "＋" },
