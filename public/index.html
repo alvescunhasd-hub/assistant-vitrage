@@ -3071,17 +3071,46 @@ function PageVent({ projet, setProjet }) {
 
 // ── PAGE PRESCRIPTION ─────────────────────────────────────────────────────────
 function PagePrescription({ db, projet, setProjet, setPage }) {
-  const [infoProjet, setInfoProjet] = useState({ nom: projet?.nom || "", client: projet?.client || "", date: projet?.date || new Date().toISOString().split("T")[0], redacteur: projet?.redacteur || "" });
-  const [typologies, setTypologies] = useState(() => {
-    if (projet?.typologies?.length > 0) return projet.typologies;
+  const [infoProjet, setInfoProjet] = useState({ 
+    nom: projet ? (projet.nom || "") : "", 
+    client: projet ? (projet.client || "") : "", 
+    date: projet ? (projet.date || new Date().toISOString().split("T")[0]) : new Date().toISOString().split("T")[0], 
+    redacteur: projet ? (projet.redacteur || "") : "" 
+  });
+  
+  const initTypologies = () => {
+    try {
+      if (projet && projet.typologies && projet.typologies.length > 0) {
+        return projet.typologies.map(t => ({
+          id: t.id || Date.now(),
+          label: t.label || "Type A",
+          dims: t.dims || "",
+          rw_requis: t.rw_requis || "",
+          gamme: t.gamme || "",
+          vitrage: t.vitrage || "",
+          rw: t.rw || "",
+          rwctr: t.rwctr || "",
+          rapport: t.rapport || "",
+          correction: t.correction || "0 dB",
+          controle: t.controle || "",
+          tl: t.tl || "",
+          fs: t.fs || "",
+          ug: t.ug || "",
+          epaisseur_dtu: t.epaisseur_dtu || "",
+          aev: t.aev || "",
+        }));
+      }
+    } catch(e) { console.error("Erreur init typologies", e); }
     return [{
       id: 1, label: "Type A",
       dims: "", rw_requis: "",
-      gamme: "", vitrage: "", rw: "", rwctr: "", rapport: "", correction: "0",
-      controle: projet?.controle_ref || "", tl: projet?.controle_tl || "", fs: projet?.controle_fs || "", ug: projet?.controle_ug || "",
-      epaisseur_dtu: projet?.epaisseur_dtu || "", aev: ""
+      gamme: "", vitrage: "", rw: "", rwctr: "", rapport: "", correction: "0 dB",
+      controle: "", tl: "", fs: "", ug: "",
+      epaisseur_dtu: "", aev: ""
     }];
-  });
+  };
+  
+  const [typologies, setTypologies] = useState(initTypologies);
 
   const addTypo = () => setTypologies(t => [...t, {
     id: Date.now(), label: `Type ${String.fromCharCode(65 + t.length)}`,
