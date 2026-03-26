@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GlassIQ</title>
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.23.5/babel.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f8f9fb; }
@@ -19,7 +19,7 @@
 </head>
 <body>
   <div id="root"></div>
-  <script type="text/babel">
+  <script type="text/babel" data-presets="react">
     const { useState, useEffect, useRef } = React;
 
 
@@ -3415,19 +3415,33 @@ function App() {
 
       {/* Contenu */}
       <div style={{ maxWidth: 900, margin: "0 auto", padding: "32px 24px" }}>
-        {page === "recherche" && <PageRecherche db={db} />}
-        {page === "vent" && <PageVent />}
-        {page === "controle" && <PageControleSolaire />}
-        {page === "prescription" && <PagePrescription db={db} />}
-        {page === "base" && <PageBase db={db} onUpdate={handleUpdate} />}
-        {page === "ajouter" && <PageAjouter db={db} onUpdate={handleUpdate} />}
+        <div style={{display: page === "vent" ? "block" : "none"}}>
+          <PageVent projet={projetGlobal} setProjet={setProjetGlobal} />
+        </div>
+        <div style={{display: page === "recherche" ? "block" : "none"}}>
+          <PageRecherche db={db} projet={projetGlobal} setProjet={setProjetGlobal} />
+        </div>
+        <div style={{display: page === "controle" ? "block" : "none"}}>
+          <PageControleSolaire projet={projetGlobal} setProjet={setProjetGlobal} />
+        </div>
+        <div style={{display: page === "prescription" ? "block" : "none"}}>
+          <PagePrescription db={db} projet={projetGlobal} setProjet={setProjetGlobal} setPage={setPage} />
+        </div>
+        <div style={{display: page === "base" ? "block" : "none"}}>
+          <PageBase db={db} onUpdate={handleUpdate} />
+        </div>
+        <div style={{display: page === "ajouter" ? "block" : "none"}}>
+          <PageAjouter db={db} onUpdate={handleUpdate} />
+        </div>
       </div>
     </div>
   );
 }
 
 
-    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    const container = document.getElementById('root');
+    const root = ReactDOM.createRoot(container);
+    root.render(React.createElement(App));
   </script>
 </body>
 </html>
